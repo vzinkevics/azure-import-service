@@ -4,7 +4,7 @@ import httpTrigger from "./index";
 
 jest.mock('@azure/storage-blob');
 
-describe('Azure function httpTrigger', () => {
+describe('blob-import-products-from-file', () => {
 
     let context: Context;
     let req: HttpRequest;
@@ -57,7 +57,7 @@ describe('Azure function httpTrigger', () => {
 
         await (httpTrigger as AzureFunction)(context, req, blob);
 
-        expect(context.log).toHaveBeenCalledWith('Record1', {
+        expect(context.log).toHaveBeenCalledWith('Record', {
             title: 'value1',
             description: 'value2',
             price: 'value3',
@@ -70,7 +70,7 @@ describe('Azure function httpTrigger', () => {
 
         await (httpTrigger as AzureFunction)(context, req, blob);
 
-        expect(context.log).not.toHaveBeenCalledWith('Record1', {
+        expect(context.log).not.toHaveBeenCalledWith('Record', {
             title: 'title',
             description: 'description',
             price: 'price',
