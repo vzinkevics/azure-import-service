@@ -9,7 +9,7 @@ jest.mock("uuid", () => ({
     v4: jest.fn(() => "randomUuid"),
 }));
 
-describe('Azure function httpTrigger', () => {
+describe('http-get-import-products-files', () => {
 
     let context: Context;
     let req: HttpRequest;

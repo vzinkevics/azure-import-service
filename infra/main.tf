@@ -80,6 +80,11 @@ resource "azurerm_application_insights" "import_service_fa" {
   resource_group_name = azurerm_resource_group.import_service_rg.name
 }
 
+data "azurerm_servicebus_namespace" "service_bus_namespace" {
+  name                          = "service-bus-sand-ne-003"
+  resource_group_name           = "rg-service-bus-sand-ne-003"
+}
+
 resource "azurerm_windows_function_app" "import_service_new" {
   name     = "fa-import-service-ne-659"
   location = "northeurope"
@@ -118,6 +123,7 @@ resource "azurerm_windows_function_app" "import_service_new" {
   app_settings = {
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING = azurerm_storage_account.import_service_fa.primary_connection_string
     WEBSITE_CONTENTSHARE                     = azurerm_storage_share.import_service_storage_share.name
+    "ServiceBusConnection"                   = data.azurerm_servicebus_namespace.service_bus_namespace.default_primary_connection_string
   }
 
   # The app settings changes cause downtime on the Function App. e.g. with Azure Function App Slots
